@@ -4,11 +4,8 @@ project(new-nav VERSION 0.1.0)
 include(CTest)
 enable_testing()
 
-set(SRC
-    App.cpp
-    main.cpp)
-
-add_executable(new-nav ${SRC})
+add_subdirectory(framework)
+add_subdirectory(app)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

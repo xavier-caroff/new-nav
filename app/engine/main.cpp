@@ -5,7 +5,7 @@ int main(
 	int		argc,
 	char*	argv[])
 {
-	App		app;
+	newNav::app::engine::App		app;
 
 	return app.execute(argc, argv);
 }
