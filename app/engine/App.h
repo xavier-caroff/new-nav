@@ -1,5 +1,8 @@
 #pragma once
 
+#include <list>
+#include <boost/dll.hpp>
+
 namespace newNav {
 namespace app {
 namespace engine {
@@ -27,6 +30,18 @@ public:
 	int execute(
 		int		argc,
 		char*	argv[]);
+
+// Implementation
+private:
+
+	/// Load the external modules.
+	void	loadModules(
+		);
+
+// Private attributes
+private:
+
+	std::list<boost::dll::shared_library>	_modules;
 };
 
 } // namespace engine
