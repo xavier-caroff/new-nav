@@ -5,8 +5,11 @@ namespace framework {
 
 // Constructor.
 BaseComponent::BaseComponent(
-	const std::string&  name)
-	: _state{ IComponent::State::created }
+	const std::string&  name,
+	IComponentManager*	manager)
+	: _state{ IComponent::State::created },
+	  _name{ name },
+	  _manager{ manager }
 {
 }
 
@@ -17,10 +20,17 @@ BaseComponent::~BaseComponent(
 }
 
 // Get the current state of the component.
-IComponent::State	BaseComponent::getState(
+IComponent::State	BaseComponent::state(
 	) const
 {
 	return _state;
+}
+
+// Get the name of the component.
+const std::string&	BaseComponent::name(
+	) const
+{
+	return _name;
 }
 
 // Change the state of the component.

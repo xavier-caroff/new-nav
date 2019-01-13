@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <boost/core/demangle.hpp>
 
 #include "BaseComponent.h"
 #include "ComponentRegistry.h"
@@ -22,8 +21,12 @@ class TcpServer:
 private:
 
 	/// Constructor.
+	///
+	/// @param name Name of the component.
+	/// @param manager Pointer to the component manager.
 	TcpServer(
-		const std::string&  name);
+		const std::string&						name,
+		newNav::framework::IComponentManager*	manager);
 
 	/// Destructor.
 	virtual ~TcpServer(

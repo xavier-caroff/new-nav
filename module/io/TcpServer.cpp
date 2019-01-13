@@ -8,8 +8,9 @@ IMPLEMENT_COMPONENT(TcpServer)
 
 // Constructor.
 TcpServer::TcpServer(
-	const std::string&  name)
-	: newNav::framework::BaseComponent{ name }
+	const std::string&						name,
+	newNav::framework::IComponentManager*	manager)
+	: newNav::framework::BaseComponent{ name, manager }
 {
 }
 

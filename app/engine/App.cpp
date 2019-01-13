@@ -10,6 +10,8 @@ namespace engine {
 // Constructor.
 App::App(
 	)
+	: _registry{ },
+	  _manager{ _registry }
 {
 }
 

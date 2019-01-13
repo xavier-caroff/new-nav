@@ -46,7 +46,11 @@ public:
 public:
 
 	/// Get the current state of the component.
-	virtual IComponent::State	getState(
+	virtual IComponent::State	state(
+		) const = 0;
+
+	/// Get the name of the component.
+	virtual const std::string&	name(
 		) const = 0;
 };
 

@@ -2,7 +2,10 @@
 
 #include <string>
 
+#include <boost/core/demangle.hpp>
+
 #include "IComponent.h"
+#include "IComponentManager.h"
 
 namespace newNav {
 namespace framework {
@@ -17,8 +20,12 @@ class BaseComponent:
 public:
 
 	/// Constructor.
+	///
+	/// @param name Name of the component.
+	/// @param manager Pointer to the component manager.
 	BaseComponent(
-		const std::string&  name);
+		const std::string&  name,
+		IComponentManager*	manager);
 
 	/// Destructor.
 	virtual ~BaseComponent(
@@ -28,7 +35,11 @@ public:
 public:
 
 	/// Get the current state of the component.
-	virtual IComponent::State	getState(
+	virtual IComponent::State	state(
+		) const override final;
+
+	/// Get the name of the component.
+	virtual const std::string&	name(
 		) const override final;
 
 // Protected operations
@@ -45,6 +56,12 @@ private:
 
 	/// The current state.
 	IComponent::State		_state;
+
+	/// The name of the component.
+	std::string				_name;
+
+	/// Pointer to the component manager.
+	IComponentManager*		_manager;
 };
 
 
@@ -56,7 +73,8 @@ public:																											\
 		);																										\
 																												\
 	static newNav::framework::IComponent*	create(																\
-		const std::string&	name);																				\
+		const std::string&						name,															\
+		newNav::framework::IComponentManager*	manager);														\
 
 
 /// Implement necessary declaration stuff for component registration
@@ -75,11 +93,11 @@ const newNav::framework::ComponentRegistry::ComponentDescription&	className::get
 }																												\
 																												\
 newNav::framework::IComponent*	className::create(																\
-	const std::string&	name)																					\
+	const std::string&						name,																\
+	newNav::framework::IComponentManager*	manager)															\
 {																												\
-	return new className(name);																					\
+	return new className(name, manager);																		\
 }																												\
-
 
 } // namespace framework
 } // namespace newNav

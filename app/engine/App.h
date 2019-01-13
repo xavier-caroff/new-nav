@@ -4,6 +4,7 @@
 #include <boost/dll.hpp>
 
 #include "ComponentRegistry.h"
+#include "ComponentManager.h"
 
 namespace newNav {
 namespace app {
@@ -48,6 +49,9 @@ private:
 
 	/// Registry of components description.
 	newNav::framework::ComponentRegistry	_registry;
+
+	/// Manager of components.
+	newNav::framework::ComponentManager		_manager;
 };
 
 } // namespace engine

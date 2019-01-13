@@ -5,6 +5,7 @@
 #include <type_traits>
 
 #include "IComponent.h"
+#include "IComponentManager.h"
 
 namespace newNav {
 namespace framework {
@@ -19,7 +20,7 @@ class ComponentRegistry
 public:
 
 	/// Defintion of the signature of the function to create a component.
-	using	CreateFunction = std::add_pointer<IComponent* (const std::string&)>::type;
+	using	CreateFunction = std::add_pointer<IComponent* (const std::string&, IComponentManager*)>::type;
 
 	///
 	/// Description of a component class.
@@ -34,7 +35,8 @@ public:
 
 		/// Constructor with initialization.
 		///
-		/// @param
+		/// @param className Class name of the component (including namespaces).
+		/// @param create Pointer to the function thzt create the component.
 		ComponentDescription(
 			const std::string&	className,
 			CreateFunction		create)
@@ -43,19 +45,19 @@ public:
 
 		/// Copy constructor
 		ComponentDescription(
-			const ComponentDescription&	other) = default;
+			const ComponentDescription&) = default;
 
 		/// Move constructor
 		ComponentDescription(
-			ComponentDescription&&	other) = default;
+			ComponentDescription&&) = default;
 
 		/// Copy operator
 		ComponentDescription&	operator=(
-			const ComponentDescription&	other) = default;
+			const ComponentDescription&) = default;
 
 		/// Move operator
 		ComponentDescription&	operator=(
-			ComponentDescription&&	other) = default;
+			ComponentDescription&&) = default;
 	};
 
 // Construction, destruction
@@ -78,9 +80,20 @@ public:
 	void	registerDescription(
 		const ComponentDescription&	description);
 
+	/// Find the description from a class name.
+	///
+	/// @param className Class name.
+	///
+	/// @return Reference to the description.
+	///
+	/// @throw std::runtime_error When no component description registered with this class name.
+	const ComponentRegistry::ComponentDescription&	find(
+		const std::string&	className) const;
+
 // Private attributes
 private:
 
+	/// Collection of the registered component's descriptions.
 	std::map<
 		std::string, ComponentDescription>		_descriptions;
 };

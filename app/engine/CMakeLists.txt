@@ -10,3 +10,7 @@ add_executable(new-nav-engine ${SRC})
 
 target_link_libraries(new-nav-engine Boost::filesystem Boost::system)
 target_link_libraries(new-nav-engine new-nav-framework)
+
+if (UNIX)
+    target_link_libraries(new-nav-engine dl)
+endif (UNIX)

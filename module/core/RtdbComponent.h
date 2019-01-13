@@ -22,8 +22,12 @@ class RtdbComponent:
 private:
 
 	/// Constructor.
+	///
+	/// @param name Name of the component.
+	/// @param manager Pointer to the component manager.
 	RtdbComponent(
-		const std::string&  name);
+		const std::string&						name,
+		newNav::framework::IComponentManager*	manager);
 
 	/// Destructor.
 	virtual ~RtdbComponent(
