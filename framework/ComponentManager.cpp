@@ -44,6 +44,15 @@ IComponent*	ComponentManager::create(
 IComponent*	ComponentManager::find(
 	const std::string&	name) const
 {
+	auto		itr = _components.find(name);
+	IComponent*	result = nullptr;
+
+	if (itr != _components.end())
+	{
+		result = itr->second.get();
+	}
+
+	return result;
 }
 
 } // namespace framework

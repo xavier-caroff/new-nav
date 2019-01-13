@@ -22,7 +22,7 @@ TcpServer::~TcpServer(
 
 // Configure the component.
 void    TcpServer::configure(
-	)
+	const newNav::framework::IComponent::ConfigData&	config)
 {
 }
 

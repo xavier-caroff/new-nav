@@ -9,6 +9,10 @@ conan_basic_setup()
 include(CTest)
 enable_testing()
 
+add_definitions(
+    -Wall
+)
+
 add_subdirectory(framework)
 add_subdirectory(app)
 add_subdirectory(module)

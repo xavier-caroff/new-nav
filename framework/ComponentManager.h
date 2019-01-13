@@ -29,7 +29,7 @@ public:
 	virtual ~ComponentManager(
 		);
 
-// Implementation of IComponent
+// Implementation of IComponentManager
 public:
 
 	/// Create a component from its class name.

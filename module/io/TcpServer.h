@@ -36,8 +36,10 @@ private:
 public:
 
 	/// Configure the component.
+	///
+	/// @param config The configuration data.
 	virtual void    configure(
-		) override final;
+		const newNav::framework::IComponent::ConfigData&	config) override final;
 
 	/// Start the execution of the component.
 	virtual void    run(

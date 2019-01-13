@@ -1,0 +1,18 @@
+{
+    "additionalPackageFolders": [
+        "../lib"
+    ],
+    "components": [
+        {
+            "name": "rtdb",
+            "className": "newNav::module::core::RtdbComponent"
+        },
+        {
+            "name": "tcpServer",
+            "className": "newNav::module::io::TcpServer",
+            "config": {
+                "port": 10000
+            }
+        }
+    ]
+}

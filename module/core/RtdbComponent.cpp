@@ -22,7 +22,7 @@ RtdbComponent::~RtdbComponent(
 
 // Configure the component.
 void    RtdbComponent::configure(
-	)
+	const newNav::framework::IComponent::ConfigData&	config)
 {
 }
 

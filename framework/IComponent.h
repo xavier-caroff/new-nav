@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 namespace newNav {
 namespace framework {
 
@@ -10,6 +12,9 @@ class IComponent
 {
 // Definition
 public:
+
+	/// Configuration data is json.
+	using ConfigData = nlohmann::json;
 
 	///
 	/// The different states of a component.
@@ -31,8 +36,10 @@ public:
 public:
 
 	/// Configure the component.
+	///
+	/// @param config The configuration data.
 	virtual void    configure(
-		) = 0;
+		const ConfigData&	config) = 0;
 
 	/// Start the execution of the component.
 	virtual void    run(
