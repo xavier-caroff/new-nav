@@ -47,9 +47,9 @@ void	App::loadModules(
 			try
 			{
 				boost::dll::shared_library	lib(current.path());
-				auto						registerComponents = lib.get<void()>("registerComponents");
+				auto						registerComponents = lib.get<void(newNav::framework::ComponentRegistry&)>("registerComponents");
 
-				registerComponents();
+				registerComponents(_registry);
 
 				_modules.push_back(std::move(lib));
 			}

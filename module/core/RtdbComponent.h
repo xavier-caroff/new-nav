@@ -8,25 +8,25 @@
 
 namespace newNav {
 namespace module {
-namespace io {
+namespace core {
 
 ///
-/// Tcp server component
+/// Real-time database component
 ///
-class TcpServer:
+class RtdbComponent:
 	public newNav::framework::BaseComponent
 {
-	DECLARE_COMPONENT(TcpServer)
+	DECLARE_COMPONENT(RtdbComponent)
 
 // Construction, destruction
 private:
 
 	/// Constructor.
-	TcpServer(
+	RtdbComponent(
 		const std::string&  name);
 
 	/// Destructor.
-	virtual ~TcpServer(
+	virtual ~RtdbComponent(
 		);
 
 // Partial implementation of IComponent
@@ -45,6 +45,6 @@ public:
 		) override final;
 };
 
-} // namespace io
+} // namespace core
 } // namespace module
 } // namespace newNav

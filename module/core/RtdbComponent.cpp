@@ -1,42 +1,42 @@
-#include "TcpServer.h"
+#include "RtdbComponent.h"
 
 namespace newNav {
 namespace module {
-namespace io {
+namespace core {
 
-IMPLEMENT_COMPONENT(TcpServer)
+IMPLEMENT_COMPONENT(RtdbComponent)
 
 // Constructor.
-TcpServer::TcpServer(
+RtdbComponent::RtdbComponent(
 	const std::string&  name)
 	: newNav::framework::BaseComponent{ name }
 {
 }
 
 // Destructor.
-TcpServer::~TcpServer(
+RtdbComponent::~RtdbComponent(
 	)
 {
 }
 
 // Configure the component.
-void    TcpServer::configure(
+void    RtdbComponent::configure(
 	)
 {
 }
 
 // Start the execution of the component.
-void    TcpServer::run(
+void    RtdbComponent::run(
 	)
 {
 }
 
 // Stop the execution of the component.
-void	TcpServer::halt(
+void	RtdbComponent::halt(
 	)
 {
 }
 
-} // namespace io
+} // namespace core
 } // namespace module
 } // namespace newNav

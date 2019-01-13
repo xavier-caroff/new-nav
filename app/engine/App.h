@@ -3,6 +3,8 @@
 #include <list>
 #include <boost/dll.hpp>
 
+#include "ComponentRegistry.h"
+
 namespace newNav {
 namespace app {
 namespace engine {
@@ -41,7 +43,11 @@ private:
 // Private attributes
 private:
 
+	/// Collection of modules loaded dynamically.
 	std::list<boost::dll::shared_library>	_modules;
+
+	/// Registry of components description.
+	newNav::framework::ComponentRegistry	_registry;
 };
 
 } // namespace engine

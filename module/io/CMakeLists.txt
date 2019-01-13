@@ -7,3 +7,5 @@ set(SRC
     TcpServer.cpp)
 
 add_library(new-nav-module-io SHARED ${SRC})
+
+target_link_libraries(new-nav-module-io new-nav-framework)
