@@ -2,10 +2,9 @@
 
 #include <string>
 
-#include <boost/core/demangle.hpp>
-
 #include "IComponent.h"
 #include "IComponentManager.h"
+#include "Demangle.h"
 
 namespace newNav {
 namespace framework {
@@ -86,7 +85,7 @@ const newNav::framework::ComponentRegistry::ComponentDescription&	className::get
 	using newNav::framework::ComponentRegistry;																	\
 																												\
 	static ComponentRegistry::ComponentDescription		description {											\
-															boost::core::demangle(typeid(className).name()),	\
+															demangle(typeid(className).name()),					\
 															className::create };								\
 																												\
 	return description;																							\
