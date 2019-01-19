@@ -9,9 +9,15 @@ conan_basic_setup()
 include(CTest)
 enable_testing()
 
-add_definitions(
-    -Wall
-)
+if (MSVC)
+    add_definitions(
+        -W4
+    )
+else()
+    add_definitions(
+        -Wall
+    )
+endif(MSVC)
 
 add_subdirectory(framework)
 add_subdirectory(app)
