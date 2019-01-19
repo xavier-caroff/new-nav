@@ -27,7 +27,7 @@ public:
 		/// Component is now fully initialized and ready to run.
 		initialized,
 		/// Component is now started.
-		run,
+		running,
 		/// The component has stopped and is ready to be deleted.
 		halted,
 	};
