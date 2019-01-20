@@ -19,6 +19,9 @@ class ComponentRegistry
 // Definition
 public:
 
+	/// The name of the entry point function.
+	static const char constexpr*		ENTRY_POINT_FUNCTION{ "registerComponents" };
+
 	/// Defintion of the signature of the function to create a component.
 	using	CreateFunction = std::add_pointer<IComponent* (const std::string&, IComponentManager*)>::type;
 

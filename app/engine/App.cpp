@@ -14,8 +14,6 @@ namespace engine {
 // Constructor.
 App::App(
 	)
-	: _registry{ },
-	  _manager{ _registry }
 {
 }
 
@@ -128,9 +126,10 @@ void	App::parseCmdLine(
 void	App::start(
 	const CommandLineOptions&	options)
 {
-	bool	goOn{ true };
+	bool				goOn{ true };
+	nlohmann::json		config;
 
-	// Load the configuration file.
+	// Load the configuration data from the file.
 
 	if (goOn)
 	{
@@ -141,7 +140,7 @@ void	App::start(
 		try
 		{
 			file.open(options.configFile.string().c_str());
-			file >> _config;
+			file >> config;
 		}
 		catch(std::exception&	e)
 		{
@@ -150,131 +149,33 @@ void	App::start(
 		}
 	}
 
-	// Load the modules located into the executable folder and additional folder
-	// provided into the configuration.
+	// Initialize the component manager.
 
 	if (goOn)
 	{
-		loadModules();
-	}
-
-	// Create the components.
-
-	if (goOn)
-	{
-		goOn = createComponents();
-	}
-
-	// Configure the components.
-
-	if (goOn)
-	{
-		configureComponents();
-	}
-}
-
-// Load all possible modules.
-void	App::loadModules(
-	)
-{
-	boost::filesystem::path		exe = boost::dll::program_location();
-	boost::filesystem::path		exeFolder = exe.parent_path();
-
-	loadModules(exeFolder);
-
-	if (_config.find("additionalPackageFolders") != _config.end())
-	{
-		for(const auto& current : _config["additionalPackageFolders"])
-		{
-			if (current.is_string())
-			{
-				boost::filesystem::path		path{ current.get<std::string>() };
-
-				if (path.is_relative())
-				{
-					path = exeFolder / path;
-				}
-
-				loadModules(path);
-			}
-		}
-	}
-}
-
-// Load the external modules located into a given folder.
-void	App::loadModules(
-	const boost::filesystem::path&	folder)
-{
-	for(const auto& current : boost::filesystem::directory_iterator(folder))
-	{
-		if (current.path().extension() == boost::filesystem::path{ ".so" } ||
-		    current.path().extension() == boost::filesystem::path{ ".dll" } ||
-		    current.path().extension() == boost::filesystem::path{ ".dylib" } )
-		{
-			try
-			{
-				boost::dll::shared_library	lib(current.path());
-				auto						registerComponents = lib.get<void(newNav::framework::ComponentRegistry&)>("registerComponents");
-
-				registerComponents(_registry);
-
-				_modules.push_back(std::move(lib));
-			}
-			catch(boost::system::system_error&	e)
-			{
-				// can't find the entry point.
-			}
-		}
-	}
-}
-
-// Create the components described into the configuration file.
-bool	App::createComponents(
-	)
-{
-	bool	result { true };
-
-	for(const auto& current : _config["components"])
-	{
-		std::string		name = current["name"].get<std::string>();
-		std::string		className = current["className"].get<std::string>();
-
 		try
 		{
-			_manager.create(name, className);
-		}
-		catch(std::runtime_error&	e)
-		{
-			std::cerr << "failed to create component " << name << " of class " << className << ": " << e.what() << std::endl;
-			result = false;
-		}
-	}
-
-	return result;
-}
-
-// Configure each component.
-void	App::configureComponents(
-	)
-{
-	for(const auto& current : _config["components"])
-	{
-		std::string		name = current["name"].get<std::string>();
-		nlohmann::json	empty;
-		nlohmann::json&	config{ empty };
-
-		if (current.find("config") != current.end())
-		{
-			config = current["config"];
-		}
-
-		try
-		{
-			_manager.find(name)->configure(config);
+			_manager.initialize(config);
 		}
 		catch(std::exception&	e)
 		{
-			std::cerr << "failed to configure component " << name << ": " << e.what() << std::endl;
+			std::cerr << "failed to initialize the component manager (see log for details): " << e.what() << std::endl;
+			goOn = false;
+		}
+	}
+
+	// Run the component manager main loop.
+
+	if (goOn)
+	{
+		try
+		{
+			_manager.run();
+		}
+		catch(std::exception&	e)
+		{
+			std::cerr << "unsupported exception occurs (see log for details): " << e.what() << std::endl;
+			goOn = false;
 		}
 	}
 }
