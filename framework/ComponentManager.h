@@ -1,8 +1,11 @@
 #pragma once
 
+#include <atomic>
+#include <condition_variable>
 #include <string>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <list>
 
 #include <boost/filesystem.hpp>
@@ -56,9 +59,22 @@ public:
 
 	/// Find a component from its name.
 	///
+	/// @param name Name of the component to find.
+	///
 	/// @return Pointer on the component, nullptr if no component.
 	virtual IComponent*	find(
 		const std::string&	name) const override final;
+
+	/// Execute an action in the component manager main loop.
+	///
+	/// @param action Pointer to the action to be executed. The component
+	/// manager take ownership of the object.
+	virtual void	execute(
+		IDeferedAction*	action) override final;
+
+	/// Ask the component manager to stop the main loop.
+	virtual void	stop(
+		) override final;
 
 // Operations
 public:
@@ -122,7 +138,28 @@ private:
 
 	/// The collection of components owned by this manager.
 	std::map<
-		std::string, std::unique_ptr<IComponent>>	_components;	
+		std::string, std::unique_ptr<IComponent>>	_components;
+
+// Main loop control attribute
+private:
+
+	/// Indicates the main loop is running.
+	std::atomic_bool								_loopRunning{ false };
+
+	/// Indicates the main loop must stop.
+	std::atomic_bool								_stopLoopRequested{ false };
+
+// Defered action list attributes
+private:
+
+	/// Mutex to protec access to the defered actions list.
+	std::mutex										_mtxDeferedActions;
+
+	/// Condition variable to detect changes on the defered actions list.
+	std::condition_variable							_cvDeferedActions;
+
+	/// Collection of defered action waiting for execution.
+	std::list<IDeferedAction*>						_deferedActions;
 };
 
 } // namespace framework

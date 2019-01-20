@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IComponent.h"
+#include "IDeferedAction.h"
 
 namespace newNav {
 namespace framework {
@@ -28,9 +29,22 @@ public:
 
 	/// Find a component from its name.
 	///
+	/// @param name Name of the component to find.
+	///
 	/// @return Pointer on the component, nullptr if no component.
 	virtual IComponent*	find(
 		const std::string&	name) const = 0;
+
+	/// Execute an action in the component manager main loop.
+	///
+	/// @param action Pointer to the action to be executed. The component
+	/// manager take ownership of the object.
+	virtual void	execute(
+		IDeferedAction*	action) = 0;
+
+	/// Ask the component manager to stop the main loop.
+	virtual void	stop(
+		) = 0;
 };
 
 } // namespace framework

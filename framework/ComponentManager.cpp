@@ -1,4 +1,6 @@
 #include <stdexcept>
+#include <memory>
+#include <iostream>		// @todo A enlever
 
 #include "ComponentManager.h"
 
@@ -54,6 +56,30 @@ IComponent*	ComponentManager::find(
 	return result;
 }
 
+// Execute an action in the component manager main loop.
+void	ComponentManager::execute(
+	IDeferedAction*	action)
+{
+	// Enqueue the action.
+
+	{
+		std::lock_guard<std::mutex> lk(_mtxDeferedActions);
+
+		_deferedActions.push_back(action);
+	}
+
+	// Notify the main loop to process defered actions.
+
+	_cvDeferedActions.notify_one();
+}
+
+// Ask the main loop to stop.
+void	ComponentManager::stop(
+	)
+{
+	_stopLoopRequested.store(true, std::memory_order_release);
+	_cvDeferedActions.notify_one();
+}
 
 // Initialize the object from configuration data.
 void    ComponentManager::initialize(
@@ -76,6 +102,61 @@ void    ComponentManager::initialize(
 void	ComponentManager::run(
 	)
 {
+	// Check the main loop is not already running.
+
+	if (_loopRunning.load() == true)
+	{
+		throw std::logic_error("component manager main loop is already running");
+	}
+
+	_loopRunning = true;
+
+	// Start the components.
+
+	for(auto& current : _components)
+	{
+		try
+		{
+			current.second->run();
+		}
+		catch(std::exception&	e)
+		{
+			// @todo Log the exception
+			// std::cerr << "failed to lauch the component " << current.second->name() << ": " << e.what() << std::endl;
+			throw e;
+		}
+	}
+
+	// Start the main loop, waiting to process defered actions.
+
+	while(_stopLoopRequested.load(std::memory_order_acquire) == false)
+	{
+		// Wait for action to be processed.
+
+		std::unique_lock<std::mutex> lock(_mtxDeferedActions);
+
+		_cvDeferedActions.wait(lock, [this]{
+			return
+				_deferedActions.empty() == false ||
+				_stopLoopRequested.load(std::memory_order_acquire) == true;
+		});
+
+		// Execute actions
+
+		while(_deferedActions.empty() == false)
+		{
+			// Peek the next action.
+
+			std::unique_ptr<IDeferedAction>	action{ _deferedActions.front() };
+			_deferedActions.pop_front();
+
+			// Execute.
+
+			action->execute(*this);
+		}
+	}
+	
+	_loopRunning = false;
 }
 
 // Load all possible modules.
