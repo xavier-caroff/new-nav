@@ -46,21 +46,19 @@ public:
 				: _className{ className },
 				  _create{ create } { }
 
-		/// Copy constructor
+		/// @cond
 		ComponentDescription(
-			const ComponentDescription&) = default;
+			const ComponentDescription&	other) = default;
 
-		/// Move constructor
 		ComponentDescription(
-			ComponentDescription&&) = default;
+			ComponentDescription&&	other) = default;
 
-		/// Copy operator
 		ComponentDescription&	operator=(
-			const ComponentDescription&) = default;
+			const ComponentDescription&	other) = default;
 
-		/// Move operator
 		ComponentDescription&	operator=(
-			ComponentDescription&&) = default;
+			ComponentDescription&&	other) = default;
+		/// @endcond
 	};
 
 // Construction, destruction

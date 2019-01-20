@@ -34,10 +34,14 @@ public:
 public:
 
 	/// Get the current state of the component.
+	///
+	/// @return The current state of the component.
 	virtual IComponent::State	state(
 		) const override final;
 
 	/// Get the name of the component.
+	///
+	/// @return The name of the component.
 	virtual const std::string&	name(
 		) const override final;
 
