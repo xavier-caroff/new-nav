@@ -2,7 +2,7 @@
 
 #include <boost/filesystem.hpp>
 
-#include "ComponentManager.h"
+#include "comp/ComponentManager.h"
 
 namespace newNav {
 namespace app {
@@ -78,10 +78,10 @@ private:
 private:
 
 	/// Manager of components.
-	newNav::framework::ComponentManager		_manager;
+	newNav::framework::comp::ComponentManager	_manager;
 
 	/// Pointer to the unique instance.
-	static App*								_uniqueInstance;
+	static App*									_uniqueInstance;
 };
 
 } // namespace engine

@@ -2,6 +2,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 class IComponentManager;
 
@@ -21,5 +22,6 @@ public:
         IComponentManager&  manager) = 0;
 };
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

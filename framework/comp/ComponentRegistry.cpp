@@ -4,6 +4,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 // Constructor.
 ComponentRegistry::ComponentRegistry(
@@ -41,5 +42,6 @@ const ComponentRegistry::ComponentDescription&	ComponentRegistry::find(
 	return itr->second;
 }
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

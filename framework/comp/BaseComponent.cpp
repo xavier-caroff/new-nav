@@ -2,6 +2,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 // Constructor.
 BaseComponent::BaseComponent(
@@ -40,5 +41,6 @@ void	BaseComponent::setState(
 	_state = value;
 }
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

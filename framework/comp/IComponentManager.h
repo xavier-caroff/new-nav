@@ -5,6 +5,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 ///
 /// Interface of a component manager.
@@ -47,5 +48,6 @@ public:
 		) = 0;
 };
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

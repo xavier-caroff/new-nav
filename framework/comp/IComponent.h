@@ -4,6 +4,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 ///
 /// Base interface for components.
@@ -65,5 +66,6 @@ public:
 		) const = 0;
 };
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

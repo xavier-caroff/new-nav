@@ -9,8 +9,8 @@ IMPLEMENT_COMPONENT(TcpServer)
 // Constructor.
 TcpServer::TcpServer(
 	const std::string&						name,
-	newNav::framework::IComponentManager*	manager)
-	: newNav::framework::BaseComponent{ name, manager }
+	newNav::framework::comp::IComponentManager*	manager)
+	: newNav::framework::comp::BaseComponent{ name, manager }
 {
 }
 
@@ -22,7 +22,7 @@ TcpServer::~TcpServer(
 
 // Configure the component.
 void    TcpServer::configure(
-	const newNav::framework::IComponent::ConfigData&	config)
+	const newNav::framework::comp::IComponent::ConfigData&	config)
 {
 	setState(IComponent::State::initialized);
 }

@@ -8,9 +8,9 @@ IMPLEMENT_COMPONENT(RtdbComponent)
 
 // Constructor.
 RtdbComponent::RtdbComponent(
-	const std::string&						name,
-	newNav::framework::IComponentManager*	manager)
-	: newNav::framework::BaseComponent{ name, manager }
+	const std::string&							name,
+	newNav::framework::comp::IComponentManager*	manager)
+	: newNav::framework::comp::BaseComponent{ name, manager }
 {
 }
 
@@ -22,7 +22,7 @@ RtdbComponent::~RtdbComponent(
 
 // Configure the component.
 void    RtdbComponent::configure(
-	const newNav::framework::IComponent::ConfigData&	config)
+	const newNav::framework::comp::IComponent::ConfigData&	config)
 {
 	setState(IComponent::State::initialized);
 }

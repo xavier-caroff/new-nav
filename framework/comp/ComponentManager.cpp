@@ -7,6 +7,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 // Constructor.
 ComponentManager::ComponentManager(
@@ -251,7 +252,7 @@ void	ComponentManager::loadModules(
 			try
 			{
 				boost::dll::shared_library	lib(current.path());
-				auto						registerComponents = lib.get<void(newNav::framework::ComponentRegistry&)>(ComponentRegistry::ENTRY_POINT_FUNCTION);
+				auto						registerComponents = lib.get<void(newNav::framework::comp::ComponentRegistry&)>(ComponentRegistry::ENTRY_POINT_FUNCTION);
 
 				registerComponents(_registry);
 
@@ -315,5 +316,6 @@ void	ComponentManager::configureComponents(
 	}
 }
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

@@ -3,6 +3,10 @@
 #include <boost/core/demangle.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 
+namespace newNav {
+namespace framework {
+namespace lang {
+
 /// Demangle the name of a symbol.
 ///
 /// @param name Name of the symbol to demangle.
@@ -21,3 +25,7 @@ std::string demangle(
 
 	return demangled;
 }
+
+} // namespace lang
+} // namespace framework
+} // namespace newNav

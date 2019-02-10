@@ -4,10 +4,11 @@
 
 #include "IComponent.h"
 #include "IComponentManager.h"
-#include "Demangle.h"
+#include "lang/Demangle.h"
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 ///
 /// Base class for components.
@@ -72,21 +73,22 @@ private:
 #define DECLARE_COMPONENT(className)																			\
 public:																											\
 																												\
-	static const newNav::framework::ComponentRegistry::ComponentDescription&	getDescription(					\
+	static const newNav::framework::comp::ComponentRegistry::ComponentDescription&	getDescription(				\
 		);																										\
 																												\
-	static newNav::framework::IComponent*	create(																\
-		const std::string&						name,															\
-		newNav::framework::IComponentManager*	manager);														\
+	static newNav::framework::comp::IComponent*	create(															\
+		const std::string&							name,														\
+		newNav::framework::comp::IComponentManager*	manager);													\
 
 
 /// Implement necessary declaration stuff for component registration
 #define IMPLEMENT_COMPONENT(className)																			\
 																												\
-const newNav::framework::ComponentRegistry::ComponentDescription&	className::getDescription(					\
+const newNav::framework::comp::ComponentRegistry::ComponentDescription&	className::getDescription(				\
 	)																											\
 {																												\
-	using newNav::framework::ComponentRegistry;																	\
+	using newNav::framework::comp::ComponentRegistry;															\
+	using newNav::framework::lang::demangle;																	\
 																												\
 	static ComponentRegistry::ComponentDescription		description {											\
 															demangle(typeid(className).name()),					\
@@ -95,12 +97,13 @@ const newNav::framework::ComponentRegistry::ComponentDescription&	className::get
 	return description;																							\
 }																												\
 																												\
-newNav::framework::IComponent*	className::create(																\
+newNav::framework::comp::IComponent*	className::create(														\
 	const std::string&						name,																\
-	newNav::framework::IComponentManager*	manager)															\
+	newNav::framework::comp::IComponentManager*	manager)														\
 {																												\
 	return new className(name, manager);																		\
 }																												\
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

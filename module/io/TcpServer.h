@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "BaseComponent.h"
-#include "ComponentRegistry.h"
+#include "comp/BaseComponent.h"
+#include "comp/ComponentRegistry.h"
 
 namespace newNav {
 namespace module {
@@ -13,7 +13,7 @@ namespace io {
 /// Tcp server component
 ///
 class TcpServer:
-	public newNav::framework::BaseComponent
+	public newNav::framework::comp::BaseComponent
 {
 	DECLARE_COMPONENT(TcpServer)
 
@@ -25,8 +25,8 @@ private:
 	/// @param name Name of the component.
 	/// @param manager Pointer to the component manager.
 	TcpServer(
-		const std::string&						name,
-		newNav::framework::IComponentManager*	manager);
+		const std::string&							name,
+		newNav::framework::comp::IComponentManager*	manager);
 
 	/// Destructor.
 	virtual ~TcpServer(
@@ -39,7 +39,7 @@ public:
 	///
 	/// @param config The configuration data.
 	virtual void    configure(
-		const newNav::framework::IComponent::ConfigData&	config) override final;
+		const newNav::framework::comp::IComponent::ConfigData&	config) override final;
 
 	/// Start the execution of the component.
 	virtual void    run(

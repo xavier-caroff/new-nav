@@ -9,6 +9,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 ///
 /// Register the description of components classes and
@@ -99,5 +100,6 @@ private:
 		std::string, ComponentDescription>		_descriptions;
 };
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav

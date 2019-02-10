@@ -17,6 +17,7 @@
 
 namespace newNav {
 namespace framework {
+namespace comp {
 
 ///
 /// The component manager manage components.
@@ -131,7 +132,7 @@ private:
 private:
 
 	/// Registry of components description.
-	newNav::framework::ComponentRegistry			_registry;
+	newNav::framework::comp::ComponentRegistry		_registry;
 
 	/// Collection of modules loaded dynamically.
 	std::list<boost::dll::shared_library>			_modules;
@@ -162,5 +163,6 @@ private:
 	std::list<IDeferedAction*>						_deferedActions;
 };
 
+} // namespace comp
 } // namespace framework
 } // namespace newNav
