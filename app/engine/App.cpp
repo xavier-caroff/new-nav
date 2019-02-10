@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <csignal>
+
 #include <boost/filesystem.hpp>
 #include <boost/program_options.hpp>
 
@@ -11,10 +13,28 @@ namespace newNav {
 namespace app {
 namespace engine {
 
+
+App*	App::_uniqueInstance{ nullptr };
+
+
 // Constructor.
 App::App(
 	)
 {
+	if (_uniqueInstance != nullptr)
+	{
+		throw std::logic_error("only one instance of newNav::app::engine can exists");
+	}
+	else
+	{
+		_uniqueInstance = this;
+	}
+	
+	signal(SIGINT, &App::onSigTerm);
+	signal(SIGTERM, &App::onSigTerm);
+#if defined(SIGQUIT)
+	signal(SIGQUIT, &App::onSigTerm);
+#endif // defined(SIGQUIT)
 }
 
 // Destructor.
@@ -179,6 +199,20 @@ void	App::start(
 		}
 	}
 }
+
+
+// Handler for the SIGINT, SIGTERM and SIGQUIT signals.
+void	App::onSigTerm(
+	int		signum)
+{
+	(void) signum;	// Unused parameter.
+	
+	if (_uniqueInstance != nullptr)
+	{
+		_uniqueInstance->_manager.stop();
+	}
+}
+
 
 } // namespace engine
 } // namespace app

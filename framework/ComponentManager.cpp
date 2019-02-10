@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <memory>
+#include <thread>
 #include <iostream>		// @todo A enlever
 
 #include "ComponentManager.h"
@@ -77,7 +78,7 @@ void	ComponentManager::execute(
 void	ComponentManager::stop(
 	)
 {
-	_stopLoopRequested.store(true, std::memory_order_release);
+	_stopLoopRequested.store(true);
 	_cvDeferedActions.notify_one();
 }
 
@@ -129,7 +130,7 @@ void	ComponentManager::run(
 
 	// Start the main loop, waiting to process defered actions.
 
-	while(_stopLoopRequested.load(std::memory_order_acquire) == false)
+	while(_stopLoopRequested.load() == false)
 	{
 		// Wait for action to be processed.
 
@@ -157,6 +158,52 @@ void	ComponentManager::run(
 	}
 	
 	_loopRunning = false;
+
+	// Halt the components.
+
+	for(auto& current : _components)
+	{
+		if (current.second->state() == IComponent::State::running)
+		{
+			try
+			{
+				current.second->halt();
+			}
+			catch(std::exception&	e)
+			{
+				// @todo Log the exception
+				// std::cerr << "failed to lauch the component " << current.second->name() << ": " << e.what() << std::endl;
+				throw e;
+			}
+		}
+	}
+
+	// Wait for component completion
+
+	while(true)
+	{
+		bool	stillRunning{ false };
+
+		// Check if some components are still running.
+
+		for(auto& current : _components)
+		{
+			if (current.second->state() != IComponent::State::halted)
+			{
+				stillRunning = true;
+				break;
+			}
+		}
+
+		if (stillRunning)
+		{
+			std::this_thread::sleep_for(std::chrono::seconds{ 1 });
+		}
+		else
+		{
+			break;
+		}
+	}
 }
 
 // Load all possible modules.

@@ -67,12 +67,21 @@ private:
 	/// @param options Options read from the command line.
 	void	start(
 		const CommandLineOptions&	options);
+
+	/// Handler for the SIGINT, SIGTERM and SIGQUIT signals.
+	///
+	/// @param signum The received signal. 
+	static void	onSigTerm(
+		int		signum);
 	
 // Private attributes
 private:
 
 	/// Manager of components.
 	newNav::framework::ComponentManager		_manager;
+
+	/// Pointer to the unique instance.
+	static App*								_uniqueInstance;
 };
 
 } // namespace engine

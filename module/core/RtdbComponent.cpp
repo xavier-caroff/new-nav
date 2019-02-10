@@ -24,18 +24,21 @@ RtdbComponent::~RtdbComponent(
 void    RtdbComponent::configure(
 	const newNav::framework::IComponent::ConfigData&	config)
 {
+	setState(IComponent::State::initialized);
 }
 
 // Start the execution of the component.
 void    RtdbComponent::run(
 	)
 {
+	setState(IComponent::State::running);
 }
 
 // Stop the execution of the component.
 void	RtdbComponent::halt(
 	)
 {
+	setState(IComponent::State::halted);
 }
 
 } // namespace core
