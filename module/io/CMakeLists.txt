@@ -4,6 +4,8 @@ find_package(Boost REQUIRED)
 
 set(SRC
     module.cpp
+    DataBufferDisplay.cpp
+    SerialReader.cpp
     TcpServer.cpp)
 
 add_library(new-nav-module-io SHARED ${SRC})

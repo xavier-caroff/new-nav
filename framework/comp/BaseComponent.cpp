@@ -41,6 +41,13 @@ void	BaseComponent::setState(
 	_state = value;
 }
 
+// Access to the component manager.
+IComponentManager*	BaseComponent::manager(
+	) const
+{
+	return _manager;
+}
+
 } // namespace comp
 } // namespace framework
 } // namespace newNav

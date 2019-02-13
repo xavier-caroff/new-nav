@@ -55,6 +55,12 @@ protected:
 	void	setState(
 		IComponent::State	value);
 
+	/// Access to the component manager.
+	///
+	/// @return Pointer to the component manager.
+	IComponentManager*	manager(
+		) const;
+
 // Private attributes
 private:
 

@@ -4,9 +4,10 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 find_package(nlohmann_json 3.5.0 REQUIRED PATHS ${NLOHMANN_JSON_ROOT})
 
 set(SRC
-    BaseComponent.cpp
-    ComponentManager.cpp
-    ComponentRegistry.cpp
+    io/DataBuffer.cpp
+    comp/BaseComponent.cpp
+    comp/ComponentManager.cpp
+    comp/ComponentRegistry.cpp
 )
 
 add_library(new-nav-framework ${SRC})

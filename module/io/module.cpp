@@ -1,6 +1,8 @@
 #include <boost/dll.hpp>
 
-#include "ComponentRegistry.h"
+#include "comp/ComponentRegistry.h"
+#include "DataBufferDisplay.h"
+#include "SerialReader.h"
 #include "TcpServer.h"
 
 #define API extern "C" BOOST_SYMBOL_EXPORT
@@ -10,7 +12,9 @@
 /// @param registry The registry to store the components published by the
 /// module.
 API void	registerComponents(
-	newNav::framework::ComponentRegistry&	registry)
+	newNav::framework::comp::ComponentRegistry&	registry)
 {
+	registry.registerDescription(newNav::module::io::DataBufferDisplay::getDescription());
+	registry.registerDescription(newNav::module::io::SerialReader::getDescription());
 	registry.registerDescription(newNav::module::io::TcpServer::getDescription());
 }

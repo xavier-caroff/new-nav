@@ -13,6 +13,25 @@
             "config": {
                 "port": 10000
             }
+        },
+        {
+            "name": "serialCom3",
+            "className": "newNav::module::io::SerialReader",
+            "config": {
+                "port": "COM3",
+                "baudRate": 9600,
+                "flowControl": "none",
+                "parity": "none",
+                "stopBits": "one",
+                "characterSize": 8
+            }
+        },
+        {
+            "name": "dataBufferDisplay",
+            "className": "newNav::module::io::DataBufferDisplay",
+            "config": {
+                "provider": "serialCom3"
+            }
         }
     ]
 }
